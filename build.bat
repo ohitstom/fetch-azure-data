@@ -1,0 +1,1 @@
+nuitka --onefile --include-plugin-directory=modules main.py
