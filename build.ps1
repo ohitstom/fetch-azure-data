@@ -1,4 +1,4 @@
-nuitka --onefile --include-plugin-directory=modules --lto=no main.py
+nuitka --onefile --include-plugin-directory=modules main.py
 Start-Sleep -Seconds 1.5
 Remove-Item -LiteralPath "main.build" -Force -Recurse
 Remove-Item -LiteralPath "main.dist" -Force -Recurse
