@@ -1,0 +1,8 @@
+output to csv - Done
+last password change - Done
+last login date - Done? (cant test without premium license)
+user permissions - Done
+
+needs doing:
+    save jwt to environment variable or encoded file (with pin)
+
