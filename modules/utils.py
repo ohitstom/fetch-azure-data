@@ -1,11 +1,17 @@
 import json
-import os 
+import aiohttp
+import asyncio
 
-def prettier(jsonObj):
-    return json.dumps(jsonObj, indent=4, sort_keys=True)
+def async_mass_request(json, urls, headers):
+    async def request(session, url):
+        async with session.get(url, headers=headers) as response:
+            perms = await response.json()
+            return perms
 
-def exportJson(jsonObj, filename):
-    if not os.path.isdir("data"):
-        os.mkdir("data")
-    with open(f'data\\{filename}', 'w') as outfile:
-        outfile.write(jsonObj)
+    async def get():
+        async with aiohttp.ClientSession() as session:
+            results = await asyncio.gather(*[asyncio.ensure_future(request(session, url)) for url in urls])
+            return results
+
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    return asyncio.run(get())
