@@ -1,0 +1,9 @@
+,id,displayName,mail,lastPasswordChangeDateTime,Permissions
+0,ae727966-73fe-46b7-9307-8b6c3375802f,Roland Beaumont,,2022-11-10T10:03:31Z,['Global Administrator']
+1,2bace537-23aa-450b-9ba6-3516a97c519d,Email1,Email1@tomthecoder.onmicrosoft.com,2022-10-27T09:12:52Z,
+2,9959b8a3-8535-4631-99de-174bdb0b782e,Email2,Email2@tomthecoder.onmicrosoft.com,2022-10-20T11:47:42Z,
+3,27c175b4-185c-4e4c-87c2-a2556185234d,Email3,Email3@tomthecoder.onmicrosoft.com,2022-10-20T11:50:04Z,
+4,aad5754f-4c3a-4825-b417-da0bb10af489,SMAIL1,smail1@tomthecoder.onmicrosoft.com,2022-10-20T11:50:36Z,
+5,b1b6bf95-0e50-4dd2-9555-1b871cfbe29f,Test User,,2022-10-20T14:56:07Z,
+6,468253ea-cc90-4eb4-aaa2-a6752e1184a3,User1,User1@tomthecoder.onmicrosoft.com,2022-10-27T10:10:24Z,
+7,01ed3f27-57b2-48e4-93a1-4bdbce9ef47c,User2,User2@tomthecoder.onmicrosoft.com,2022-10-20T11:47:07Z,
