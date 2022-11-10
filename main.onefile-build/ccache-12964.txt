@@ -1,0 +1,61 @@
+[2022-11-10T13:12:05.574267 17020] === CCACHE 4.6 STARTED =========================================
+[2022-11-10T13:12:05.574267 17020] Config: (default) absolute_paths_in_stderr = false
+[2022-11-10T13:12:05.574267 17020] Config: (default) base_dir = 
+[2022-11-10T13:12:05.574267 17020] Config: (environment) cache_dir = C:\Users\WE-TOM\AppData\Local\Nuitka\Nuitka\Cache\ccache
+[2022-11-10T13:12:05.574267 17020] Config: (default) compiler = 
+[2022-11-10T13:12:05.574267 17020] Config: (default) compiler_check = mtime
+[2022-11-10T13:12:05.574267 17020] Config: (default) compiler_type = auto
+[2022-11-10T13:12:05.574267 17020] Config: (default) compression = true
+[2022-11-10T13:12:05.574267 17020] Config: (default) compression_level = 0
+[2022-11-10T13:12:05.574267 17020] Config: (default) cpp_extension = 
+[2022-11-10T13:12:05.574267 17020] Config: (default) debug = false
+[2022-11-10T13:12:05.574267 17020] Config: (default) debug_dir = 
+[2022-11-10T13:12:05.574267 17020] Config: (default) depend_mode = false
+[2022-11-10T13:12:05.574267 17020] Config: (default) direct_mode = true
+[2022-11-10T13:12:05.574267 17020] Config: (default) disable = false
+[2022-11-10T13:12:05.574267 17020] Config: (default) extra_files_to_hash = 
+[2022-11-10T13:12:05.574267 17020] Config: (default) file_clone = false
+[2022-11-10T13:12:05.574267 17020] Config: (default) hard_link = false
+[2022-11-10T13:12:05.574267 17020] Config: (default) hash_dir = true
+[2022-11-10T13:12:05.574267 17020] Config: (default) ignore_headers_in_manifest = 
+[2022-11-10T13:12:05.574267 17020] Config: (default) ignore_options = 
+[2022-11-10T13:12:05.574267 17020] Config: (default) inode_cache = false
+[2022-11-10T13:12:05.574267 17020] Config: (default) keep_comments_cpp = false
+[2022-11-10T13:12:05.574267 17020] Config: (default) limit_multiple = 0.8
+[2022-11-10T13:12:05.574267 17020] Config: (environment) log_file = C:\Users\WE-TOM\ITSSLL~1\CODING~1\Github\repos\FETCH-~1\main.onefile-build\ccache-12964.txt
+[2022-11-10T13:12:05.574267 17020] Config: (default) max_files = 0
+[2022-11-10T13:12:05.574267 17020] Config: (default) max_size = 5.0G
+[2022-11-10T13:12:05.574267 17020] Config: (default) namespace = 
+[2022-11-10T13:12:05.574267 17020] Config: (default) path = 
+[2022-11-10T13:12:05.574267 17020] Config: (default) pch_external_checksum = false
+[2022-11-10T13:12:05.574267 17020] Config: (default) prefix_command = 
+[2022-11-10T13:12:05.574267 17020] Config: (default) prefix_command_cpp = 
+[2022-11-10T13:12:05.574267 17020] Config: (default) read_only = false
+[2022-11-10T13:12:05.574267 17020] Config: (default) read_only_direct = false
+[2022-11-10T13:12:05.574267 17020] Config: (default) recache = false
+[2022-11-10T13:12:05.574267 17020] Config: (default) reshare = false
+[2022-11-10T13:12:05.574267 17020] Config: (default) run_second_cpp = true
+[2022-11-10T13:12:05.574267 17020] Config: (default) secondary_storage = 
+[2022-11-10T13:12:05.574267 17020] Config: (environment) sloppiness = include_file_mtime, include_file_ctime
+[2022-11-10T13:12:05.574267 17020] Config: (default) stats = true
+[2022-11-10T13:12:05.574267 17020] Config: (default) stats_log = 
+[2022-11-10T13:12:05.574267 17020] Config: (default) temporary_dir = C:\Users\WE-TOM\AppData\Local\Nuitka\Nuitka\Cache\ccache/tmp
+[2022-11-10T13:12:05.574267 17020] Config: (default) umask = 
+[2022-11-10T13:12:05.574267 17020] Command line: C:\Users\WE-TOM\AppData\Local\Nuitka\Nuitka\ccache\v4.6\ccache.exe C:\Users\WE-TOM\AppData\Local\Nuitka\Nuitka\gcc\x86_64\11.3.0-14.0.3-10.0.0-msvcrt-r3\mingw64\bin\gcc.exe -o static_src\OnefileBootstrap.o -c -flto -fuse-linker-plugin -fno-fat-lto-objects -std=c11 -fvisibility=hidden -fwrapv -pipe -fpartial-inlining -ftrack-macro-expansion=0 -Wno-deprecated-declarations -fno-var-tracking -Wno-misleading-indentation -fcompare-debug-second -O3 -D_WIN32_WINNT=0x0501 -D__NUITKA_NO_ASSERT__ -D_NUITKA_PLUGIN_MULTIPROCESSING_ENABLED=1 -I. -IC:\Users\WE-TOM\ITSSLL~1\CODING~1\Software\Python\lib\SITE-P~1\nuitka\build\include -IC:\Users\WE-TOM\ITSSLL~1\CODING~1\Software\Python\lib\SITE-P~1\nuitka\build\static_src -IC:\Users\WE-TOM\ITSSLL~1\CODING~1\Software\Python\lib\SITE-P~1\nuitka\build\inline_copy\zstd static_src\OnefileBootstrap.c
+[2022-11-10T13:12:05.590268 17020] Hostname: DESKTOP-953EKLP
+[2022-11-10T13:12:05.590268 17020] Working directory: C:/Users/WE-TOM/ITSSLL~1/CODING~1/Github/repos/FETCH-~1/main.onefile-build
+[2022-11-10T13:12:05.590268 17020] Compiler type: gcc
+[2022-11-10T13:12:05.591270 17020] Source file: static_src\OnefileBootstrap.c
+[2022-11-10T13:12:05.591270 17020] Object file: static_src\OnefileBootstrap.o
+[2022-11-10T13:12:05.591270 17020] Trying direct lookup
+[2022-11-10T13:12:05.597267 17020] Retrieved c19e4ekt5psjku12km80lnbjm3sgdq08g from primary storage (C:\Users\WE-TOM\AppData\Local\Nuitka\Nuitka\Cache\ccache/c/1/9e4ekt5psjku12km80lnbjm3sgdq08gM)
+[2022-11-10T13:12:05.601271 17020] Looking for result key in C:\Users\WE-TOM\AppData\Local\Nuitka\Nuitka\Cache\ccache/c/1/9e4ekt5psjku12km80lnbjm3sgdq08gM
+[2022-11-10T13:12:05.895266 17020] Got result key from manifest
+[2022-11-10T13:12:05.896267 17020] Retrieved 6f257ssqvjonvb4ip3filnh6bvh3aofeo from primary storage (C:\Users\WE-TOM\AppData\Local\Nuitka\Nuitka\Cache\ccache/6/f/257ssqvjonvb4ip3filnh6bvh3aofeoR)
+[2022-11-10T13:12:05.902266 17020] Reading embedded entry #0 .o (529013 bytes)
+[2022-11-10T13:12:05.902266 17020] Writing to static_src\OnefileBootstrap.o
+[2022-11-10T13:12:05.907281 17020] Succeeded getting cached result
+[2022-11-10T13:12:05.907281 17020] Result: direct_cache_hit
+[2022-11-10T13:12:05.907281 17020] Result: primary_storage_hit
+[2022-11-10T13:12:05.908268 17020] Acquired lock C:\Users\WE-TOM\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/c/stats.lock
+[2022-11-10T13:12:05.921268 17020] Releasing lock C:\Users\WE-TOM\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/c/stats.lock
