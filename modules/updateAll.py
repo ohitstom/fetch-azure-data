@@ -8,9 +8,7 @@ from modules import utils
 def run(access_token):
     try:
         # Formulate headers for future requests
-        headers = {"Authorization": "Bearer " + access_token,
-                    "x-ms-command-name": "Reports%20-%20DownloadInteractiveSignInsEvents"
-                }
+        headers = {"Authorization": "Bearer " + access_token}
 
         # Request data from API using headers + Convert response to JSON
         base = base_url + "beta/users/?$select=id, displayname, mail, lastPasswordChangeDateTime"
