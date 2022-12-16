@@ -1,14 +1,9 @@
 import json
 import aiohttp
 import asyncio
-<<<<<<< HEAD
-
-def async_mass_request(json, urls, headers):
-=======
 import subprocess
 
 async def async_mass_request(json, urls, headers):
->>>>>>> 5e80d19 (2:32)
     async def request(session, url):
         async with session.get(url, headers=headers) as response:
             perms = await response.json()
@@ -19,10 +14,6 @@ async def async_mass_request(json, urls, headers):
             results = await asyncio.gather(*[asyncio.ensure_future(request(session, url)) for url in urls])
             return results
 
-<<<<<<< HEAD
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    return asyncio.run(get())
-=======
     return await get()
 
 async def powershell(*args, verbose=None, wait=True, cwd=None, shell="powershell", **kwargs):
@@ -51,4 +42,3 @@ async def powershell(*args, verbose=None, wait=True, cwd=None, shell="powershell
         else:
             await proc.wait()
     return proc
->>>>>>> 5e80d19 (2:32)

@@ -1,13 +1,2 @@
-<<<<<<< HEAD
-output to csv - Done
-last password change - Done
-last login date - Done? (cant test without premium license)
-user permissions - Done
-
-needs doing:
-    save jwt to environment variable or encoded file (with pin)
-
-=======
 Connect-MgGraph -Scopes "User.Read", "User.Read.All", "Directory.Read.All", "Group.Read.All"
 Get-MgUser -All -Property ID, DisplayName, mail, lastPasswordChangeDateTime | select ID, displayname, mail, lastPasswordChangeDateTime
->>>>>>> 5e80d19 (2:32)
