@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import msal
 from msal import PublicClientApplication
 
@@ -6,3 +7,6 @@ authority_url = "https://login.microsoftonline.com/ffb75476-0afa-47b0-9b8c-6f978
 base_url = "https://graph.microsoft.com/"
 scopes = ["User.Read", "User.Read.All", "Directory.Read.All", "Group.Read.All"]
 app = PublicClientApplication(APPLICATION_ID, authority=authority_url)
+=======
+base_url = "https://graph.microsoft.com/"
+>>>>>>> 5e80d19 (2:32)

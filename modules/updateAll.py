@@ -5,7 +5,11 @@ import pandas as pd
 from modules.globals import *
 from modules import utils
 
+<<<<<<< HEAD
 def run(access_token):
+=======
+async def run(access_token):
+>>>>>>> 5e80d19 (2:32)
     try:
         # Formulate headers for future requests
         headers = {"Authorization": "Bearer " + access_token}
@@ -19,7 +23,11 @@ def run(access_token):
         perm_urls = []
         for Dict in json['value']:
             perm_urls.append(f"{base_url}v1.0/users/{Dict['id']}/transitiveMemberOf")
+<<<<<<< HEAD
         results = utils.async_mass_request(json, perm_urls, headers)
+=======
+        results = await utils.async_mass_request(json, perm_urls, headers)
+>>>>>>> 5e80d19 (2:32)
         
         # Append permissions to json
         for Dict, perms in zip(json['value'], results):
