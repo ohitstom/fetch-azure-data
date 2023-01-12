@@ -33,10 +33,17 @@ async def main(package):
         await utils.shutdown()
 
 async def login():
-    # Microsoft login and creation of data
+    # Clearing Previous Logins
+    print("\nSanitizing Azure Context...")
+    await utils.powershell("Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force", wait=True, verbose=False)
     await utils.powershell('Clear-AzContext -Force', wait=True, verbose=False)
+    
+    # Microsoft login and creation of data
+    print("Prompting for login...")
     await utils.powershell('Connect-AzAccount', wait=True, verbose=False)
+    print("Connecting to Microsoft Graph...")
     await utils.powershell('Connect-MgGraph -Scopes "User.Read", "User.Read.All", "Directory.Read.All", "Group.Read.All"', wait=True, verbose=False)
+    print("Getting Access Token...")
     access_proc = await utils.powershell("Get-AzAccessToken -ResourceUrl 'https://graph.microsoft.com/' | ConvertTo-Json", wait=True, verbose=False)
     access = (await access_proc.stdout.read()).decode("utf-8")
 
@@ -54,7 +61,8 @@ async def login():
     await main(package)
 
 async def package_check():
-    print("Checking for AzureAD powershell module")
+    # Checking Packages
+    print("Checking for powershell modules...")
     azuread_proc = await utils.powershell("Get-Module -ListAvailable -Name AzureAD", wait=True, verbose=False)
     azuread = (await azuread_proc.stdout.read()).decode("utf-8")
     
@@ -64,6 +72,8 @@ async def package_check():
     if azuread != "" and azread != "":
         print("AzureAD and Az.Accounts powershell modules installed")
         await login()
+
+    # Installing Missing Packages 
 
     if azuread == "":
         print("AzureAD powershell module not installed")
@@ -82,8 +92,8 @@ async def package_check():
     if azread == "":
         print("Az.Accounts powershell module not installed")
         print("Installing Az.Accounts powershell module (This can take a long time)")
-        install_proc = await utils.powershell("Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force", wait=True, verbose=False)
-        install = (await install_proc.read()).decode("utf-8")
+        install_proc = await utils.powershell("Install-Module -Name Az.Accounts -Scope CurrentUser -Repository PSGallery -Force", wait=True, verbose=False)
+        install = (await install_proc.stdout.read()).decode("utf-8")
         if install == "":
             print("Az.Accounts powershell module installed")
         else:
@@ -91,6 +101,9 @@ async def package_check():
             print("Please install Az.Accounts powershell module manually")
             print("Exiting...")
             sys.exit()
+    
+    os.system('cls')
+    await login()
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
