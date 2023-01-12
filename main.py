@@ -30,10 +30,11 @@ async def main(package):
         os.system('cls')
         await main(package)
     else:
-        await powershell('Disconnect-MgGraph', wait=True, verbose=False)
-        await powershell('Clear-AzContext -Force', wait=True, verbose=False)
+        print("Clearing Token And Disconnecting From Graph...")
+        await utils.powershell('Disconnect-MgGraph', wait=True, verbose=False)
+        await utils.powershell('Clear-AzContext -Force', wait=True, verbose=False)
         os.system('cls')
-        sys.exit
+        os._exit(0)
 
 async def login():
     # Clearing Previous Logins
