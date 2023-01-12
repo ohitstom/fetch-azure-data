@@ -5,12 +5,6 @@ import subprocess
 import sys
 import os
 
-async def shutdown(standin=None):
-    await powershell('Disconnect-MgGraph', wait=True, verbose=False)
-    await powershell('Clear-AzContext -Force', wait=True, verbose=False)
-    os.system('cls')
-    sys.exit
-
 async def async_mass_request(json, urls, headers):
     async def request(session, url):
         async with session.get(url, headers=headers) as response:
