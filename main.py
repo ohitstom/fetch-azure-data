@@ -15,25 +15,28 @@ async def main(package):
         3: updateEmails.run,
         4: sys.exit
     }    
+    
     selection = input(layout.selection % (f"{package['User']}\nYour login will expire at: {package['Expiry']}"))
     if selection.isdigit() and int(selection) in selectionDict:
         os.system('cls')
         print(await (selectionDict[int(selection)](package['Token'] if int(selection) != 4 else None)))
-
     else:
         os.system('cls')
         print("Invalid Selection")
         await main(package)
+
     menuReturn = input("\nReturn? (Y/N) -> ").lower()
     if menuReturn == "y":
         os.system('cls')
         await main(package)
     else:
-        sys.exit
+        await utils.shutdown()
 
 async def login():
     # Microsoft login and creation of data
-    connect = await utils.powershell('Connect-MgGraph -Scopes "User.Read", "User.Read.All", "Directory.Read.All", "Group.Read.All" | Out-Null', wait=True, verbose=False)
+    await utils.powershell('Clear-AzContext -Force', wait=True, verbose=False)
+    await utils.powershell('Connect-AzAccount', wait=True, verbose=False)
+    await utils.powershell('Connect-MgGraph -Scopes "User.Read", "User.Read.All", "Directory.Read.All", "Group.Read.All"', wait=True, verbose=False)
     access_proc = await utils.powershell("Get-AzAccessToken -ResourceUrl 'https://graph.microsoft.com/' | ConvertTo-Json", wait=True, verbose=False)
     access = (await access_proc.stdout.read()).decode("utf-8")
     package = {
@@ -44,8 +47,9 @@ async def login():
 
     # Epoch to datetime
     package['Expiry'] = datetime.datetime.fromtimestamp(package['Expiry'] / 1e3).strftime('%Y-%m-%d %H:%M:%S')
-    
+
     # Main Function
+    os.system('cls')
     await main(package)
 
 async def package_check():
