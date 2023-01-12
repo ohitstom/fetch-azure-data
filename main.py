@@ -30,7 +30,7 @@ async def main(package):
         os.system('cls')
         await main(package)
     else:
-        print("Clearing Token And Disconnecting From Graph...")
+        print("Clearing Login And Disconnecting From Graph...")
         await utils.powershell('Disconnect-MgGraph', wait=True, verbose=False)
         await utils.powershell('Clear-AzContext -Force', wait=True, verbose=False)
         os.system('cls')
@@ -47,7 +47,6 @@ async def login():
     await utils.powershell('Connect-AzAccount', wait=True, verbose=False)
     print("Connecting to Microsoft Graph...")
     await utils.powershell('Connect-MgGraph -Scopes "User.Read", "User.Read.All", "Directory.Read.All", "Group.Read.All"', wait=True, verbose=False)
-    print("Getting Access Token...")
     access_proc = await utils.powershell("Get-AzAccessToken -ResourceUrl 'https://graph.microsoft.com/' | ConvertTo-Json", wait=True, verbose=False)
     access = (await access_proc.stdout.read()).decode("utf-8")
 
@@ -65,6 +64,9 @@ async def login():
     await main(package)
 
 async def package_check():
+    if os.path.exists("packages.txt"):
+        await login()
+    
     # Checking Packages
     print("Checking for powershell modules...")
     azuread_proc = await utils.powershell("Get-Module -ListAvailable -Name AzureAD", wait=True, verbose=False)
@@ -74,6 +76,9 @@ async def package_check():
     azread = (await azread_proc.stdout.read()).decode("utf-8")
 
     if azuread != "" and azread != "":
+        # Cache package State
+        with open("packages.txt", "w") as f:
+            f.write("True")
         print("AzureAD and Az.Accounts powershell modules installed")
         await login()
 
@@ -106,6 +111,9 @@ async def package_check():
             print("Exiting...")
             sys.exit()
     
+    # Cache package State
+    with open("packages.txt", "w") as f:
+        f.write("True")
     os.system('cls')
     await login()
 

@@ -1,3 +1,1 @@
-Connect-MgGraph -Scopes "User.Read", "User.Read.All", "Directory.Read.All", "Group.Read.All"
-Get-MgUser -All -Property ID, DisplayName, mail, lastPasswordChangeDateTime | select ID, displayname, mail, lastPasswordChangeDateTime
-Disconnect-MgGraph
+redo package-check
