@@ -1,9 +1,0 @@
-Display Name,Licenses,Proxy Addresses,User Principle Name,Last Password Change,Permissions
-Roland Beaumont,,,admin@tomthecoder.onmicrosoft.com,2022-11-10T10:03:31Z,Global Administrator
-Email1,EXCHANGESTANDARD,SMTP:Email1@tomthecoder.onmicrosoft.com,Email1@tomthecoder.onmicrosoft.com,2022-10-27T09:12:52Z,
-Email2,EXCHANGESTANDARD,SMTP:Email2@tomthecoder.onmicrosoft.com,Email2@tomthecoder.onmicrosoft.com,2022-10-20T11:47:42Z,
-Email3,EXCHANGESTANDARD,SMTP:Email3@tomthecoder.onmicrosoft.com,Email3@tomthecoder.onmicrosoft.com,2022-10-20T11:50:04Z,
-SMAIL1,,SMTP:smail1@tomthecoder.onmicrosoft.com,smail1@tomthecoder.onmicrosoft.com,2022-10-20T11:50:36Z,
-Test User,,,TestUser@tomthecoder.onmicrosoft.com,2022-10-20T14:56:07Z,
-User1,,SMTP:User1@tomthecoder.onmicrosoft.com,User1@tomthecoder.onmicrosoft.com,2022-10-27T10:10:24Z,
-User2,O365_BUSINESS_ESSENTIALS,SMTP:User2@tomthecoder.onmicrosoft.com,User2@tomthecoder.onmicrosoft.com,2022-10-20T11:47:07Z,

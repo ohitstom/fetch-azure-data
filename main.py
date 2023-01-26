@@ -1,12 +1,8 @@
 import os
 import sys
-import webbrowser
-import pyperclip
 import asyncio
 import json
 import datetime
-
-from modules import layout, updateActivity, updateAll, updateEmails, utils
 
 async def main(package):
     selectionDict ={
@@ -20,6 +16,7 @@ async def main(package):
     if selection.isdigit() and int(selection) in selectionDict:
         os.system('cls')
         print(await (selectionDict[int(selection)](package['Token'] if int(selection) != 4 else None)))
+        logger._pause_file_output = False
     else:
         os.system('cls')
         print("Invalid Selection")
@@ -31,25 +28,31 @@ async def main(package):
         await main(package)
     else:
         print("Clearing Login And Disconnecting From Graph...")
-        await utils.powershell('Disconnect-MgGraph', wait=True, verbose=False)
-        await utils.powershell('Clear-AzContext -Force', wait=True, verbose=False)
+        await utils.powershell('Disconnect-MgGraph', wait=True)
+        await utils.powershell('Clear-AzContext -Force', wait=True)
         os.system('cls')
         os._exit(0)
 
 async def login():
     # Clearing Previous Logins
     print("\nSanitizing Azure Context...")
-    await utils.powershell("Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force", wait=True, verbose=False)
-    await utils.powershell('Clear-AzContext -Force', wait=True, verbose=False)
+    await utils.powershell("Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force", wait=True)
+    await utils.powershell('Clear-AzContext -Force', wait=True)
     
     # Microsoft login and creation of data
     print("Prompting for login...")
-    await utils.powershell('Connect-AzAccount', wait=True, verbose=False)
+    await utils.powershell('Connect-AzAccount', wait=True)
     print("Connecting to Microsoft Graph...")
-    await utils.powershell('Connect-MgGraph -Scopes "User.Read", "User.Read.All", "Directory.Read.All", "Group.Read.All"', wait=True, verbose=False)
+    await utils.powershell('Connect-MgGraph -Scopes "User.Read", "User.Read.All", "Directory.Read.All", "Group.Read.All"', wait=True)
     access_proc = await utils.powershell("Get-AzAccessToken -ResourceUrl 'https://graph.microsoft.com/' | ConvertTo-Json", wait=True, verbose=False)
     access = (await access_proc.stdout.read()).decode("utf-8")
-
+    
+    if "Token" not in access:
+        print("Connection Failed, verbose has been printed to console.")
+        print(access)
+        input("Press any key to exit...")
+        os._exit(0)
+        
     package = {
         'Token': json.loads(access)['Token'],
         'Expiry': int(''.join(filter(str.isdigit, json.loads(access)['ExpiresOn']))),
@@ -64,59 +67,38 @@ async def login():
     await main(package)
 
 async def package_check():
-    if os.path.exists("packages.txt"):
-        await login()
-    
     # Checking Packages
     print("Checking for powershell modules...")
-    azuread_proc = await utils.powershell("Get-Module -ListAvailable -Name AzureAD", wait=True, verbose=False)
-    azuread = (await azuread_proc.stdout.read()).decode("utf-8")
+    azuread_proc = await utils.powershell("Get-Module -ListAvailable -Name AzureAD", wait=True)
+    azread_proc = await utils.powershell("Get-Module -ListAvailable -Name Az.Accounts", wait=True)
     
-    azread_proc = await utils.powershell("Get-Module -ListAvailable -Name Az.Accounts", wait=True, verbose=False)
+    azuread = (await azuread_proc.stdout.read()).decode("utf-8")
     azread = (await azread_proc.stdout.read()).decode("utf-8")
 
-    if azuread != "" and azread != "":
-        # Cache package State
-        with open("packages.txt", "w") as f:
-            f.write("True")
-        print("AzureAD and Az.Accounts powershell modules installed")
+    if azuread == "" or azread == "":
+        print("AzureAD or Az.Accounts powershell module not installed\n Please run dependencies.ps1 as admin.")
+        input("Press any key to exit...")
+        os._exit(0)
+    else:
+        print("Powershell modules installed")
         await login()
 
-    # Installing Missing Packages 
-
-    if azuread == "":
-        print("AzureAD powershell module not installed")
-        print("Installing AzureAD powershell module")
-        await utils.powershell("Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force", wait=True, verbose=False)
-        install_proc = await utils.powershell("Install-Module -Name AzureAD -Scope CurrentUser -Force", wait=True, verbose=False)
-        install = (await install_proc.stdout.read()).decode("utf-8")
-        if install == "":
-            print("AzureAD powershell module installed")
-        else:
-            print("Error installing AzureAD powershell module")
-            print("Please install AzureAD powershell module manually")
-            print("Exiting...")
-            sys.exit()
-    
-    if azread == "":
-        print("Az.Accounts powershell module not installed")
-        print("Installing Az.Accounts powershell module (This can take a long time)")
-        install_proc = await utils.powershell("Install-Module -Name Az.Accounts -Scope CurrentUser -Repository PSGallery -Force", wait=True, verbose=False)
-        install = (await install_proc.stdout.read()).decode("utf-8")
-        if install == "":
-            print("Az.Accounts powershell module installed")
-        else:
-            print("Error installing Az.Accounts powershell module")
-            print("Please install Az.Accounts powershell module manually")
-            print("Exiting...")
-            sys.exit()
-    
-    # Cache package State
-    with open("packages.txt", "w") as f:
-        f.write("True")
-    os.system('cls')
-    await login()
-
 if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(package_check())
+    from modules import logger
+    from modules import layout, updateActivity, updateAll, updateEmails, utils, globals
+
+    args = "\n".join(sys.argv[1:])
+    if len(args) <= 1:
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(package_check())
+    else:
+        for item in globals.arg_dict:
+            if args in globals.arg_dict[item]['commands']:
+                exec(globals.arg_dict[item]['action'])
+                if globals.arg_dict[item]['continue']:
+                    loop = asyncio.get_event_loop()
+                    loop.run_until_complete(package_check())
+                break
+        else:
+            print(f"Invalid Argument: {args}\n")
+            print(globals.arg_help)

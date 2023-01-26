@@ -3,12 +3,21 @@ import json as j
 import pandas as pd
 
 from modules.globals import *
-from modules import utils
+from modules import utils, logger
 
 async def run(access_token):
     try:
         # Formulate headers for future requests
         headers = {"Authorization": "Bearer " + access_token}
+
+        # Get default domain
+        base = base_url + "v1.0/domains"
+        response = requests.get(base, headers=headers)
+        json = j.loads(response.text)
+        for Dict in json['value']:
+            if Dict['isDefault'] == True:
+                domain = Dict['id']
+                break
 
         # Request data from API using headers + Convert response to JSON
         base = base_url + "beta/users/?$select=id, displayname, proxyAddresses, userPrincipalName, lastPasswordChangeDateTime"
@@ -61,8 +70,9 @@ async def run(access_token):
         df = pd.json_normalize(json, record_path = ['value'])
         df = df.reindex(columns=moved_cols)
         df.columns = renamed_cols
-        df.to_csv('output.csv', index=False)
-        return f'Data has been stored in "output.csv" in the root directory.\nRequested Data: \n{df}'
+        df.to_csv(f'{domain}.csv', index=False)
+        logger._pause_file_output = True
+        return f'Data has been stored in "{domain}.csv" in the root directory.\nRequested Data: \n{df}'
     
     except Exception as e:
         return e

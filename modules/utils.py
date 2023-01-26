@@ -4,6 +4,9 @@ import asyncio
 import subprocess
 import sys
 import os
+import psutil
+
+from modules import globals
 
 async def async_mass_request(json, urls, headers):
     async def request(session, url):
@@ -44,3 +47,13 @@ async def powershell(*args, verbose=None, wait=True, cwd=None, shell="powershell
         else:
             await proc.wait()
     return proc
+
+def process_pid_running(pid): # Boolean operator for running pids.
+    try:
+        return psutil.pid_exists(pid)
+    except Exception:
+        return False
+
+def verbose_print(*args, **kwargs):
+    if globals.verbose:
+        print(*args, **kwargs)
