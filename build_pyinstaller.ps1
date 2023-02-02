@@ -1,1 +1,1 @@
-pyinstaller main.py --runtime-tmpdir=".\temp"
+pyinstaller main.py --runtime-tmpdir=".\temp" --onefile
