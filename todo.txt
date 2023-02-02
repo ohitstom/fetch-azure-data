@@ -1,0 +1,7 @@
+utils.py
+>> lines 41-42, seem to be executing instantly at the same time. Ensure first line is completed before running the second.
+>> Exit properly if the login window is closed prematurely using signals
+>> If possible bypass the code stuff entirely
+
+main.py
+>> cleanup + speedup

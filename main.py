@@ -27,8 +27,7 @@ async def main(package):
         os.system('cls')
         await main(package)
     else:
-        print("Clearing Login And Disconnecting From Graph...")
-        await utils.powershell('Disconnect-MgGraph', wait=True)
+        print("Clearing Login...")
         await utils.powershell('Clear-AzContext -Force', wait=True)
         os.system('cls')
         os._exit(0)
@@ -36,14 +35,20 @@ async def main(package):
 async def login():
     # Clearing Previous Logins
     print("\nSanitizing Azure Context...")
-    await utils.powershell("Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force", wait=True)
     await utils.powershell('Clear-AzContext -Force', wait=True)
     
     # Microsoft login and creation of data
-    print("Prompting for login...")
-    await utils.powershell('Connect-AzAccount', wait=True)
-    print("Connecting to Microsoft Graph...")
-    await utils.powershell('Connect-MgGraph -Scopes "User.Read", "User.Read.All", "Directory.Read.All", "Group.Read.All"', wait=True)
+    print("Preparing for login...")
+    process = await utils.powershell(
+        '\n'.join([
+            '$DebugPreference = "Continue"' if globals.verbose else '$DebugPreference = "SilentlyContinue"',
+            'Connect-AzAccount -UseDeviceAuthentication'
+        ]),
+        wait=True,
+        account_proc=True
+    )
+
+    print("Waiting for login success...")
     access_proc = await utils.powershell("Get-AzAccessToken -ResourceUrl 'https://graph.microsoft.com/' | ConvertTo-Json", wait=True, verbose=False)
     access = (await access_proc.stdout.read()).decode("utf-8")
     
@@ -69,13 +74,13 @@ async def login():
 async def package_check():
     # Checking Packages
     print("Checking for powershell modules...")
-    azuread_proc = await utils.powershell("Get-Module -ListAvailable -Name AzureAD", wait=True)
-    azread_proc = await utils.powershell("Get-Module -ListAvailable -Name Az.Accounts", wait=True)
-    
-    azuread = (await azuread_proc.stdout.read()).decode("utf-8")
-    azread = (await azread_proc.stdout.read()).decode("utf-8")
+    process = await utils.powershell("@((Get-Module 'AzureAD', 'Az.Accounts' -ListAvailable).Name | Select-Object -Unique)", wait=True, verbose=False)
+    check_out = (await process.stdout.read()).decode("utf-8").strip()
 
-    if azuread == "" or azread == "":
+    if globals.verbose:
+        print(check_out)
+
+    if 'AzureAD' not in check_out or 'Az.Accounts' not in check_out or '+' in check_out:
         print("AzureAD or Az.Accounts powershell module not installed\n Please run dependencies.ps1 as admin.")
         input("Press any key to exit...")
         os._exit(0)
