@@ -1,4 +1,7 @@
 aiohttp==3.8.3
-pandas==1.5.1
-psutil==5.9.3
-requests==2.28.1
+pandas==1.5.3
+pandas_stubs==1.2.0.53
+psutil==5.9.4
+pywebview==4.0.2
+requests==2.28.2
+webview==0.1.5

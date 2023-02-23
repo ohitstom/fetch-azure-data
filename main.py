@@ -58,10 +58,11 @@ async def login():
         input("Press any key to exit...")
         os._exit(0)
         
+    json = json.loads(access)
     package = {
-        'Token': json.loads(access)['Token'],
-        'Expiry': int(''.join(filter(str.isdigit, json.loads(access)['ExpiresOn']))),
-        'User': json.loads(access)['UserId']
+        'Token': json['Token'],
+        'Expiry': int(''.join(filter(str.isdigit, json['ExpiresOn']))),
+        'User': json['UserId']
     }
 
     # Epoch to datetime
@@ -75,12 +76,12 @@ async def package_check():
     # Checking Packages
     print("Checking for powershell modules...")
     process = await utils.powershell("@((Get-Module 'AzureAD', 'Az.Accounts' -ListAvailable).Name | Select-Object -Unique)", wait=True, verbose=False)
-    check_out = (await process.stdout.read()).decode("utf-8").strip()
+    check_out = '\n'.join((await process.stdout.read()).decode("utf-8").strip().splitlines()[-2:])
 
     if globals.verbose:
         print(check_out)
 
-    if 'AzureAD' not in check_out or 'Az.Accounts' not in check_out or '+' in check_out:
+    if {'AzureAD', 'Az.Accounts'}.issubset(check_out):
         print("AzureAD or Az.Accounts powershell module not installed\n Please run dependencies.ps1 as admin.")
         input("Press any key to exit...")
         os._exit(0)

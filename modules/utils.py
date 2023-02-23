@@ -22,27 +22,25 @@ async def async_mass_request(json, urls, headers):
 
     return await get()
 
-def get_current_url(window=None):
-    while webview.windows:
-        url = window.get_current_url()
-        if url == 'https://login.microsoftonline.com/appverify':
-            window.destroy()
-            break
 
-
-async def login_popup(code):
-    t = threading.Thread(target=get_current_url)
-    t.start()
+def login_popup(code):  
+    print(code)
+    def get_current_url(window=None):
+        while webview.windows:
+            url = window.get_current_url()
+            if url == 'https://login.microsoftonline.com/appverify':
+                window.destroy()
+                break
     
-    window = webview.create_window('Login', 'https://microsoft.com/devicelogin', on_top=True, width=500, height=700)
     def on_loaded():
         webview.windows[0].evaluate_js(
             f"""
             document.querySelector('#otc.form-control').value = '{code}';
-            document.querySelector("#idSIButton9").click()
             """ 
         )  
-
+    
+    
+    window = webview.create_window('Login', 'https://microsoft.com/devicelogin', on_top=True, width=500, height=700)
     window.events.loaded += on_loaded
     webview.start(get_current_url, window)
     
@@ -67,12 +65,11 @@ async def powershell(*args, verbose=None, wait=True, account_proc=None, cwd=None
         if account_proc:
             while process_pid_running(proc.pid):
                 line = str(await proc.stdout.readline(), encoding="utf-8")
-                if verbose:
-                    verbose_print(line, end="")          
+                verbose_print(line, end="")          
                 if 'https://microsoft.com/devicelogin' in line:
                     print('Opening login menu...')
                     code = line.split('code ')[1].split(' to authenticate')[0]
-                    await login_popup(code.strip())
+                    login_popup(code.strip())
 
         if verbose:
             # while proc.returncode is None:  # for some reason this can break...? sometimes after the process exits the loop continues and the pc fans spin up...
